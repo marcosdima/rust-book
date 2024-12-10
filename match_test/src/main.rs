@@ -23,6 +23,17 @@ fn value_in_cents(coin: Coin) -> u8 {
     }
 }
 
+fn describe_option(x: Option<i32>) {
+    match x {
+        None => println!("No value"),
+        Some(i) if i > 0 => println!("Positive"),
+        Some(i) if i < 0 => println!("Negative"),
+        Some(_) => println!("Zero"),
+    }
+}
+
+
 fn main() {
     value_in_cents(Coin::Quarter(UsState::Alaska, UsState::Alabama));
+    describe_option(Some(0));
 }
