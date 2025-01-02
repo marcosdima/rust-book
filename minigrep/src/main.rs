@@ -7,15 +7,21 @@ struct Arguments {
     path: String,
 }
 
+impl Arguments {
+    fn new(args: &[String]) -> Arguments {
+        Arguments {
+            target: args[1].clone(),
+            path: args[2].clone()
+        }
+    }
+}
+
 fn get_args() -> Arguments {
     // Get arguments from env.args...
     let arguments: Vec<String> = env::args().collect();
 
     // Returns the structure with the recollected data.
-    Arguments {
-        target: arguments[1].clone(),
-        path: arguments[2].clone()
-    }
+    Arguments::new(&arguments)
 }
 
 fn main() {
