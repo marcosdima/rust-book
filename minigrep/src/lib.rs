@@ -35,7 +35,15 @@ pub fn run(args: Arguments) -> Result<(), Box<dyn Error>> {
 }
 
 fn search<'a>(target: &str, content: &'a str) -> Vec<&'a str> {
-    vec![]
+    let mut result = Vec::new();
+
+    for line in content.lines() {
+        if line.contains(target) {
+            result.push(line);
+        }
+    }
+
+    result
 }
 
 #[cfg(test)]
@@ -46,9 +54,9 @@ mod test {
     fn one_result() {
         let target = "duct";
         let content = "\
-            Rust:
-            safe, fast, productive.
-            Pick three.";
+Rust:
+safe, fast, productive.
+Pick three.";
 
         assert_eq!(vec!["safe, fast, productive."], search(target, content));
     }
