@@ -19,10 +19,12 @@ impl Arguments {
             return Err("Too many arguments!")
         }
 
-        Arguments {
-            target: args[1].clone(),
-            path: args[2].clone()
-        }
+        Ok(
+            Arguments {
+                target: args[1].clone(),
+                path: args[2].clone()
+            }
+        )
     }
 }
 
