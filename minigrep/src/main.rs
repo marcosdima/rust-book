@@ -1,6 +1,5 @@
-use std::{ self, env, fs, process };
+use std::{ self, env, fs, process, error::{ Error } };
 
-#[derive(Debug)]
 struct Arguments {
     target: String,
     path: String,
@@ -41,10 +40,16 @@ fn main() {
         process::exit(1);
     });
 
-    println!("\n{arguments:#?}\n");
+    println!("\nLooking for '{}'", arguments.target);
+    println!("At: {}\n", arguments.path);
 
-    let text = fs::read_to_string(arguments.path)
-        .expect("File can't be readed...");
+    run(arguments);
+}
+
+fn run(args: Arguments) -> Result<(), Box<dyn Error>> {
+    let text = fs::read_to_string(args.path)?;
 
     println!("The text is:\n{text}");
+
+    Ok(())
 }
