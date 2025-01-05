@@ -29,7 +29,9 @@ impl Arguments {
 pub fn run(args: Arguments) -> Result<(), Box<dyn Error>> {
     let text = fs::read_to_string(args.path)?;
 
-    println!("The text is:\n{text}");
+    for (i, line) in search(&args.target, &text).into_iter().enumerate() {
+        println!("{}. {}", i + 1, line)
+    }
 
     Ok(())
 }
