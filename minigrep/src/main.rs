@@ -1,5 +1,4 @@
-use std::env;
-use std::fs;
+use std::{ self, env, fs, process };
 
 #[derive(Debug)]
 struct Arguments {
@@ -8,7 +7,7 @@ struct Arguments {
 }
 
 impl Arguments {
-    fn build(args: &[String]) -> Result<Arguments, 'static String> {
+    fn build(args: &[String]) -> Result<Arguments, &'static str> {
         let expected = 3;
         let received = args.len();
 
@@ -28,7 +27,7 @@ impl Arguments {
     }
 }
 
-fn get_args() -> Arguments {
+fn get_args() -> Result<Arguments, &'static str> {
     // Get arguments from env.args...
     let arguments: Vec<String> = env::args().collect();
 
@@ -37,9 +36,12 @@ fn get_args() -> Arguments {
 }
 
 fn main() {
-    let arguments = get_args();
+    let arguments = get_args().unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
 
-    println!("{arguments:#?}\n");
+    println!("\n{arguments:#?}\n");
 
     let text = fs::read_to_string(arguments.path)
         .expect("File can't be readed...");
