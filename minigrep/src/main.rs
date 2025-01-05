@@ -43,7 +43,10 @@ fn main() {
     println!("\nLooking for '{}'", arguments.target);
     println!("At: {}\n", arguments.path);
 
-    run(arguments);
+    if let Err(e) = run(arguments) {
+        println!("Application error: {e}");
+        process::exit(1);
+    }
 }
 
 fn run(args: Arguments) -> Result<(), Box<dyn Error>> {
