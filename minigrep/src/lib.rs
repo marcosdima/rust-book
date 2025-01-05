@@ -33,3 +33,23 @@ pub fn run(args: Arguments) -> Result<(), Box<dyn Error>> {
 
     Ok(())
 }
+
+fn search<'a>(target: &str, content: &'a str) -> Vec<&'a str> {
+    vec![]
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn one_result() {
+        let target = "duct";
+        let content = "\
+            Rust:
+            safe, fast, productive.
+            Pick three.";
+
+        assert_eq!(vec!["safe, fast, productive."], search(target, content));
+    }
+}
