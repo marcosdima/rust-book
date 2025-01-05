@@ -8,7 +8,17 @@ struct Arguments {
 }
 
 impl Arguments {
-    fn new(args: &[String]) -> Arguments {
+    fn build(args: &[String]) -> Result<Arguments, 'static String> {
+        let expected = 3;
+        let received = args.len();
+
+        // Validate the number of arguments.
+        if received < expected {
+            return Err("Not enough arguments!")
+        } else if received > expected {
+            return Err("Too many arguments!")
+        }
+
         Arguments {
             target: args[1].clone(),
             path: args[2].clone()
@@ -21,7 +31,7 @@ fn get_args() -> Arguments {
     let arguments: Vec<String> = env::args().collect();
 
     // Returns the structure with the recollected data.
-    Arguments::new(&arguments)
+    Arguments::build(&arguments)
 }
 
 fn main() {
